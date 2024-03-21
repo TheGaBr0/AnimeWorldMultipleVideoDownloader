@@ -65,8 +65,12 @@ def download_multiple_videos(links, output_dir, max_downloads_in_parallel):
 
         # Wait for all threads to finish
         wait(futures)
-        
-        
+    
+    
+MAX_EPISODE = 1000
+MAX_DOWNLOADS_IN_PARALLEL = 50
+INITIAL_EPISODE = 0
+
 
 if __name__ == "__main__":
     #output_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloaded_episodes")
@@ -82,16 +86,16 @@ if __name__ == "__main__":
     while True:
         url = input("Enter the link of an episode: ")
         try:
-            max_downloads_in_parallel = int(input(("Enter the maximum number of downloads to run simultaneously (<=20): ")))
-            initial_episode = int(input("Enter the starting episode number (>0): "))
-            max_episodes = int(input("Enter the maximum number of episodes to download (<1000): "))
+            max_downloads_in_parallel = int(input((f"Enter the maximum number of downloads to run simultaneously (<={MAX_DOWNLOADS_IN_PARALLEL}): ")))
+            initial_episode = int(input(f"Enter the starting episode number (>{INITIAL_EPISODE}): "))
+            max_episodes = int(input(f"Enter the maximum number of episodes to download (<{MAX_EPISODE}): "))
             
-            if max_downloads_in_parallel <=0 or max_downloads_in_parallel >50:
-                print("The number of downloads to run simultaneously should be between 0 and 50")
-            elif initial_episode <= 0 or max_episodes <= 0:
-                print("The starting episode number and the maximum number of episodes must be greater than zero.")
-            elif max_episodes > 1000:
-                print("The maximum number of episodes cannot be greater than 1000.")
+            if max_downloads_in_parallel <=INITIAL_EPISODE or max_downloads_in_parallel >MAX_DOWNLOADS_IN_PARALLEL:
+                print(f"The number of downloads to run simultaneously should be between {INITIAL_EPISODE} and {MAX_DOWNLOADS_IN_PARALLEL}")
+            elif initial_episode <= INITIAL_EPISODE or max_episodes <= 0:
+                print(f"The starting episode number and the maximum number of episodes must be greater than {INITIAL_EPISODE}.")
+            elif max_episodes > MAX_EPISODE:
+                print(f"The maximum number of episodes cannot be greater than {MAX_EPISODE}.")
             else:
                 video_links = replace_episode_number(url, initial_episode, max_episodes)
                 
