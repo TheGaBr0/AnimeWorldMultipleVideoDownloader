@@ -1,4 +1,4 @@
-# BreadcrumbsAnimeWorldMultipleVideoDownloader
+# AnimeWorldMultipleVideoDownloader
 Questo è un programma scritto in python per scaricare molteplici video in contemporanea da AnimeWorld in maniera veloce. 
 Sfrutta il sistema di archiviazione nei server di AnimeWorld: il nome dei files di una serie sono sempre gli stessi ad eccezione dell'episodio.
 E' quindi sufficiente inserire il link diretto del file di un qualsiasi episodio di una serie e specificare un range di episodi da scaricare. 
