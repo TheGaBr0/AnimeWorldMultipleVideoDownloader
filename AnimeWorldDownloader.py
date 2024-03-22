@@ -29,7 +29,7 @@ def replace_episode_number(url, min_episode_number, max_episode_number):
     episode_number_index = url.find('Ep_') + 2
     
     number_of_digits = 1
-    i = episode_number_index + 1  # Start from the next index after the given index
+    i = episode_number_index + 1 
     while i < len(url) and url[i].isdigit():
         number_of_digits += 1
         i += 1
@@ -53,7 +53,7 @@ def download_video(url, output_path, position):
                 f.write(chunk)
                 pbar.update(len(chunk))
     except Exception as e:
-        print(f"Error downloading {url}: {e}")
+        print(f"Errore di scaricamento {url}: {e}")
 
 def download_multiple_videos(links, output_dir, max_downloads_in_parallel):
     with ThreadPoolExecutor(max_workers=max_downloads_in_parallel) as executor:  
@@ -65,15 +65,10 @@ def download_multiple_videos(links, output_dir, max_downloads_in_parallel):
 
         # Wait for all threads to finish
         wait(futures)
-    
-    
-MAX_EPISODE = 1000
-MAX_DOWNLOADS_IN_PARALLEL = 50
-INITIAL_EPISODE = 0
-
+        
+        
 
 if __name__ == "__main__":
-    #output_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloaded_episodes")
     
     if getattr(sys, 'frozen', False):
         output_directory = os.path.join(os.path.dirname(sys.executable), "downloaded_episodes")
@@ -84,33 +79,33 @@ if __name__ == "__main__":
         os.makedirs(output_directory)
     
     while True:
-        url = input("Enter the link of an episode: ")
+        url = input("Inserisci il link di un episodio: ")
         try:
-            max_downloads_in_parallel = int(input((f"Enter the maximum number of downloads to run simultaneously (<={MAX_DOWNLOADS_IN_PARALLEL}): ")))
-            initial_episode = int(input(f"Enter the starting episode number (>{INITIAL_EPISODE}): "))
-            max_episodes = int(input(f"Enter the maximum number of episodes to download (<{MAX_EPISODE}): "))
+            max_downloads_in_parallel = int(input(("Inserisci il numero massimo di download da eseguire contemporaneamente (<=99): ")))
+            initial_episode = int(input("Inserisci il numero di episodio iniziale (>0): "))
+            max_episodes = int(input("Inserisci il numero massimo di episodi da scaricare (<1000): "))
             
-            if max_downloads_in_parallel <=INITIAL_EPISODE or max_downloads_in_parallel >MAX_DOWNLOADS_IN_PARALLEL:
-                print(f"The number of downloads to run simultaneously should be between {INITIAL_EPISODE} and {MAX_DOWNLOADS_IN_PARALLEL}")
-            elif initial_episode <= INITIAL_EPISODE or max_episodes <= 0:
-                print(f"The starting episode number and the maximum number of episodes must be greater than {INITIAL_EPISODE}.")
-            elif max_episodes > MAX_EPISODE:
-                print(f"The maximum number of episodes cannot be greater than {MAX_EPISODE}.")
+            if max_downloads_in_parallel <= 1 or max_downloads_in_parallel > 99:
+                print("Il numero di download da eseguire contemporaneamente deve essere compreso tra 1 e 99")
+            elif initial_episode <= 0 or max_episodes <= 0:
+                print("Il numero di episodio iniziale e il numero massimo di episodi devono essere maggiori di zero.")
+            elif max_episodes > 1000:
+                print("Il numero massimo di episodi non può essere maggiore di 1000.")
             else:
                 video_links = replace_episode_number(url, initial_episode, max_episodes)
                 
                 video_links_sanitized = divide_list(video_links, max_downloads_in_parallel)
                 
-                print(f"Output directory: {output_directory}")
-                print(f"Processing {max_downloads_in_parallel} episodes at a time")
+                print(f"Directory di output: {output_directory}")
+                print(f"Elaborazione di {max_downloads_in_parallel} episodi alla volta")
                 
                 for video_links in video_links_sanitized:
                     download_multiple_videos(video_links, output_directory, max_downloads_in_parallel)
                 break
-            
-                print("Download completed")
+                
+                print("Download completato")
         except ValueError:
-            print("Error: Please make sure to enter valid numbers for the starting episode and the maximum number of episodes.")
+            print("Errore: Assicurati di inserire numeri validi per il numero di episodio iniziale e il numero massimo di episodi.")
 
-    
+        
  
