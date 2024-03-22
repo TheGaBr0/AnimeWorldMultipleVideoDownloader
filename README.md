@@ -8,7 +8,7 @@ Episodi da scaricare: 20
 Episodi scaricabili in contemporanea: 5
 Il programma ne scarica i primi 5, terminati procede coi successivi 5 e così via fino al termine. 
 
-Piccola gif di esempio:
+Piccola gif di esempio:__
 ![2024-03-2210-24-34-ezgif com-video-to-gif-converter](https://github.com/TheGaBr0/AnimeWorldMultipleVideoDownloader/assets/62567964/fd8b6612-46e5-4f3f-bb3f-7f8dc1274108)
 
 ## Requisiti
